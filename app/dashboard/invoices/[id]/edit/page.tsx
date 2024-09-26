@@ -3,6 +3,12 @@ import Breadcrumbs from '@/app/ui/invoices/breadcrumbs';
 import { fetchInvoiceById, fetchCustomers } from '@/app/lib/data';
 import { updateInvoice } from '@/app/lib/actions';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Invoices',
+  };
+  
  
 export default async function Page({ params } : {params : { id: string } }) {
     const id = params.id;
@@ -10,6 +16,10 @@ export default async function Page({ params } : {params : { id: string } }) {
         fetchInvoiceById(id),
         fetchCustomers(),
       ]);
+
+      if (!invoice) {
+        notFound;
+      }
     return (
     <main>
       <Breadcrumbs
